@@ -7,7 +7,7 @@
 <meta name="description" content="Sanjeev Rana — Business / Data Analyst. Business Intelligence student seeking an internship from January 2027.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Noto+Sans+Devanagari:wght@500;700&display=swap" rel="stylesheet">
 <style>
 /* Dark is the default look; light is available from the toggle. */
 :root{
@@ -102,6 +102,12 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 .greet.out{opacity:0;transform:translateY(-8px)}
 .greet::after{content:attr(data-lang);font:500 .62rem "JetBrains Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);vertical-align:super;margin-left:4px;opacity:.85}
 .label .greet::after{display:none}
+.greet:lang(hi),.greet:lang(ne){font-family:"Noto Sans Devanagari","Space Grotesk",sans-serif}
+.name-swap{transition:opacity .35s ease,transform .35s ease}
+.name-swap.out{opacity:0;transform:translateY(-8px)}
+.name-swap:lang(hi) span,.name-swap:lang(ne) span{font-family:"Noto Sans Devanagari",sans-serif;font-size:.86em;line-height:1.19;letter-spacing:0}
+.intro h1{text-transform:uppercase;min-height:1.21em}
+.hero h1.name-swap{min-height:2.32em}
 .hero h1 .ac{color:var(--accent)}
 .lede{font:500 clamp(1.15rem,2.4vw,1.5rem)/1.35 "Space Grotesk",sans-serif;margin:22px 0 14px;max-width:620px;letter-spacing:-.01em}
 .hero p.sub{color:var(--muted);max-width:560px;margin-bottom:30px}
@@ -236,7 +242,7 @@ footer .f-links a:hover{color:var(--accent)}
       <div class="mono-av"><img src="photo.jpg" alt="Sanjeev Rana"></div>
       <div>
         <div class="label"><span class="greet">Hello, I'm</span></div>
-        <h1 class="display">SANJEEV RANA</h1>
+        <h1 class="display name-swap"><span class="first">Sanjeev</span> <span class="last">Rana</span></h1>
       </div>
     </div>
     <p>Business / Data Analyst and Business Intelligence student in France. I turn raw data into KPI reports, dashboards and decisions. Open to internships from January 2027.</p>
@@ -268,7 +274,7 @@ footer .f-links a:hover{color:var(--accent)}
     <div>
       <span class="label">Business Analyst • Data Analyst • BI</span>
       <p class="hello"><span class="greet">Hello, I'm</span></p>
-      <h1 class="display">Sanjeev<br><span class="ac">Rana.</span></h1>
+      <h1 class="display name-swap"><span class="first">Sanjeev</span><br><span class="ac"><span class="last">Rana</span>.</span></h1>
       <p class="lede">I turn data into insights that drive business decisions.</p>
       <p class="sub">Business Intelligence student at Clermont School of Business. I combine a Business Analyst internship with 8+ years in sales, business development and operations, and I work in Excel, Power BI, Tableau and SQL.</p>
       <div class="actions">
@@ -548,22 +554,32 @@ footer .f-links a:hover{color:var(--accent)}
 
   // Greeting that cycles through the languages Sanjeev speaks
   var greetings = [
-    {w:"Hello, I'm", l:'EN'},
-    {w:"Bonjour, je m'appelle", l:'FR'},
-    {w:'नमस्ते, मेरा नाम है', l:'HI'},
-    {w:'नमस्कार, मेरो नाम हो', l:'NE'}
+    {w:"Hello, I'm",             l:'EN', lang:'en', f:'Sanjeev', s:'Rana'},
+    {w:"Bonjour, je m'appelle",  l:'FR', lang:'fr', f:'Sanjeev', s:'Rana'},
+    {w:'नमस्ते, मेरा नाम है',       l:'HI', lang:'hi', f:'संजीव',  s:'राणा'},
+    {w:'नमस्कार, मेरो नाम हो',     l:'NE', lang:'ne', f:'सञ्जीव', s:'राणा'}
   ];
-  var greetEls = document.querySelectorAll('.greet'), gi = 0;
-  function setGreet(g){ greetEls.forEach(function(el){ el.textContent = g.w; el.setAttribute('data-lang', g.l); el.lang = g.l === 'EN' ? 'en' : g.l === 'FR' ? 'fr' : g.l === 'HI' ? 'hi' : 'ne'; }); }
+  var greetEls = document.querySelectorAll('.greet'), nameEls = document.querySelectorAll('.name-swap'), gi = 0;
+  function setGreet(g){
+    greetEls.forEach(function(el){ el.textContent = g.w; el.setAttribute('data-lang', g.l); el.lang = g.lang; });
+    nameEls.forEach(function(el){
+      el.lang = g.lang;
+      el.querySelector('.first').textContent = g.f;
+      el.querySelector('.last').textContent = g.s;
+    });
+  }
   setGreet(greetings[0]);
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
     setInterval(function(){
+      var next = greetings[(gi + 1) % greetings.length], nameChanges = next.f !== greetings[gi].f;
       greetEls.forEach(function(el){ el.classList.add('out'); });
+      if (nameChanges) nameEls.forEach(function(el){ el.classList.add('out'); });
       setTimeout(function(){
         gi = (gi + 1) % greetings.length; setGreet(greetings[gi]);
         greetEls.forEach(function(el){ el.classList.remove('out'); });
+        nameEls.forEach(function(el){ el.classList.remove('out'); });
       }, 350);
-    }, 2200);
+    }, 2800);
   }
 
   // Nav background on scroll
