@@ -534,10 +534,12 @@ footer .f-links a:hover{color:var(--accent)}
     store('sr-theme', root.dataset.theme);
   });
 
-  // Intro card: shown on first visit only
+  // Intro card: shown once per visit (each new tab/window); skipped on reload
+  function sessionGet(k){ try { return sessionStorage.getItem(k); } catch(e){ return null; } }
+  function sessionSet(k, v){ try { sessionStorage.setItem(k, v); } catch(e){} }
   var intro = document.getElementById('intro');
-  function closeIntro(){ intro.classList.add('gone'); store('sr-intro-seen', '1'); }
-  if (!store('sr-intro-seen')) { intro.classList.remove('gone'); }
+  function closeIntro(){ intro.classList.add('gone'); sessionSet('sr-intro-seen', '1'); }
+  if (!sessionGet('sr-intro-seen')) { intro.classList.remove('gone'); }
   document.getElementById('enter').addEventListener('click', closeIntro);
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeIntro(); });
   document.getElementById('replay').addEventListener('click', function(e){ e.preventDefault(); intro.classList.remove('gone'); });
