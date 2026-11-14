@@ -547,11 +547,9 @@ footer .f-links a:hover{color:var(--accent)}
   // Greeting that cycles through the languages Sanjeev speaks
   var greetings = [
     {w:"Hello, I'm", l:'EN'},
-    {w:'Bonjour, je suis', l:'FR'},
-    {w:'Namaste, mera naam', l:'HI'},
-    {w:'नमस्ते, मेरा नाम', l:'HI'},
-    {w:'Namaskar, mero naam', l:'NE'},
-    {w:'नमस्कार, मेरो नाम', l:'NE'}
+    {w:"Bonjour, je m'appelle", l:'FR'},
+    {w:'नमस्ते, मेरा नाम है', l:'HI'},
+    {w:'नमस्कार, मेरो नाम हो', l:'NE'}
   ];
   var greetEls = document.querySelectorAll('.greet'), gi = 0;
   function setGreet(g){ greetEls.forEach(function(el){ el.textContent = g.w; el.setAttribute('data-lang', g.l); el.lang = g.l === 'EN' ? 'en' : g.l === 'FR' ? 'fr' : g.l === 'HI' ? 'hi' : 'ne'; }); }
