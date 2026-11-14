@@ -235,7 +235,7 @@ footer .f-links a:hover{color:var(--accent)}
     <div class="intro-top">
       <div class="mono-av"><img src="photo.jpg" alt="Sanjeev Rana"></div>
       <div>
-        <div class="label"><span class="greet">Hello</span>, I'm</div>
+        <div class="label"><span class="greet">Hello, I'm</span></div>
         <h1 class="display">SANJEEV RANA</h1>
       </div>
     </div>
@@ -267,7 +267,7 @@ footer .f-links a:hover{color:var(--accent)}
   <div class="wrap hero-grid">
     <div>
       <span class="label">Business Analyst • Data Analyst • BI</span>
-      <p class="hello"><span class="greet">Hello</span>, I'm</p>
+      <p class="hello"><span class="greet">Hello, I'm</span></p>
       <h1 class="display">Sanjeev<br><span class="ac">Rana.</span></h1>
       <p class="lede">I turn data into insights that drive business decisions.</p>
       <p class="sub">Business Intelligence student at Clermont School of Business. I combine a Business Analyst internship with 8+ years in sales, business development and operations, and I work in Excel, Power BI, Tableau and SQL.</p>
@@ -546,7 +546,12 @@ footer .f-links a:hover{color:var(--accent)}
 
   // Greeting that cycles through the languages Sanjeev speaks
   var greetings = [
-    {w:'Hello', l:'EN'}, {w:'Bonjour', l:'FR'}, {w:'Namaste', l:'HI'}, {w:'नमस्ते', l:'HI'}, {w:'Namaskar', l:'NE'}, {w:'नमस्कार', l:'NE'}
+    {w:"Hello, I'm", l:'EN'},
+    {w:'Bonjour, je suis', l:'FR'},
+    {w:'Namaste, mera naam', l:'HI'},
+    {w:'नमस्ते, मेरा नाम', l:'HI'},
+    {w:'Namaskar, mero naam', l:'NE'},
+    {w:'नमस्कार, मेरो नाम', l:'NE'}
   ];
   var greetEls = document.querySelectorAll('.greet'), gi = 0;
   function setGreet(g){ greetEls.forEach(function(el){ el.textContent = g.w; el.setAttribute('data-lang', g.l); el.lang = g.l === 'EN' ? 'en' : g.l === 'FR' ? 'fr' : g.l === 'HI' ? 'hi' : 'ne'; }); }
